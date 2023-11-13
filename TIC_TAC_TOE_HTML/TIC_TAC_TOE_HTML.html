@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic Tac Toe</title>
+<style>
+ .grid {
+   display: grid;
+   grid-template-columns: repeat(3, 100px);
+   grid-template-rows: repeat(3, 100px);
+   gap: 5px;
+   justify-content: center;
+   margin-top: 20px;
+ }
+ .cell {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100px;
+   height: 100px;
+   background-color: #ffffff;
+   cursor: pointer;
+   font-size: 2em;
+   border: 1px solid #1100ff;
+ }
+ #restartButton {
+   margin-top: 20px;
+   display: block;
+   width: 150px;
+   padding: 10px;
+   font-size: 16px;
+   cursor: pointer;
+   background-color: #f9f9f9;
+
+
+border: 1px solid #1100ff;
+   text-align: center;
+ }
+</style>
+</head>
+<body>
+
+
+<div id="game" class="grid">
+ <div class="cell" onclick="makeMove(this, 0)"></div>
+ <div class="cell" onclick="makeMove(this, 1)"></div>
+ <div class="cell" onclick="makeMove(this, 2)"></div>
+ <div class="cell" onclick="makeMove(this, 3)"></div>
+ <div class="cell" onclick="makeMove(this, 4)"></div>
+ <div class="cell" onclick="makeMove(this, 5)"></div>
+ <div class="cell" onclick="makeMove(this, 6)"></div>
+ <div class="cell" onclick="makeMove(this, 7)"></div>
+ <div class="cell" onclick="makeMove(this, 8)"></div>
+</div>
+<button id="restartButton" onclick="restartGame()">Reiniciar Juego</button>
+
+
+<script>
+ var player = 'X';
+ var gameOver = false;
+ var moves = 0;
+
+
+ function makeMove(cell, index) {
+   if(cell.textContent === '' && !gameOver) {
+     cell.textContent = player;
+     moves++;
+     checkWinner();
+     player = player === 'X' ? 'O' : 'X';
+   }
+ }
+ function checkWinner() {
+   var cells = document.querySelectorAll('.cell');
+   var winConditions = [
+     
+[0, 1, 2],
+     [3, 4, 5],
+     [6, 7, 8],
+     [0, 3, 6],
+     [1, 4, 7],
+     [2, 5, 8],
+     [0, 4, 8],
+     [2, 4, 6]
+   ];
+   winConditions.forEach(function(condition) {
+     if(
+       cells[condition[0]].textContent === cells[condition[1]].textContent &&
+       cells[condition[1]].textContent === cells[condition[2]].textContent &&
+       cells[condition[0]].textContent !== ''
+     ) {
+       alert('jUGADOR ' + cells[condition[0]].textContent + ' GANA!');
+       gameOver = true;
+       return;
+     }
+   });
+
+
+   if(moves === 9 && !gameOver) {
+     alert('EMPAPTE!');
+     gameOver = true;
+   }
+ }
+
+
+ function restartGame() {
+   var cells = document.querySelectorAll('.cell');
+   cells.forEach(function(cell) {
+     cell.textContent = '';
+   });
+   player = 'X';
+   gameOver = false;
+   moves = 0;
+ }
+
+
+</script>
+</body>
+</html>
+
